@@ -330,6 +330,15 @@ void wStart::on_tbnMaps_clicked()
     showModule(WMAPS);
 }
 
+void wStart::on_tbnHofEditor_clicked()
+{
+    if (!checkMainDir())
+        return;
+
+    WHOFEDITOR = new wHofEditor();
+    showModule(WHOFEDITOR);
+}
+
 void wStart::on_tbnMapVerification_clicked()
 {
     if (!checkMainDir())

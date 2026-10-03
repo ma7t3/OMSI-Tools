@@ -26,6 +26,7 @@
 #include "OTWidgets/message.h"
 #include "OTModules/wFbh/wdbcopyrights.h"
 #include "OTModules/wMaps/wmaps.h"
+#include "OTModules/wHofEditor/whofeditor.h"
 #include "OTModules/wBugDoc/wbugdoc.h"
 
 namespace Ui {
@@ -73,6 +74,8 @@ private slots:
 
     void on_tbnMaps_clicked();
 
+    void on_tbnHofEditor_clicked();
+
     void on_tbnMapVerification_clicked();
 
     void on_actionDashboard_triggered();
@@ -112,6 +115,7 @@ private:
     wCleanup *WCLEANUP = nullptr;
     wDBCopyrights *WDBCOPYRIGHTS = nullptr;
     wMaps *WMAPS = nullptr;
+    wHofEditor *WHOFEDITOR = nullptr;
     wBugDoc *WBUGDOC = nullptr;
     wDBKnownWords *WDBKNOWNWORDS = nullptr;
     OTUpdater *updater = new OTUpdater();
