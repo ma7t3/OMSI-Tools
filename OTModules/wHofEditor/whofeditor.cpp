@@ -3,10 +3,7 @@
 
 #include <QCloseEvent>
 
-wHofEditor::wHofEditor(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::wHofEditor)
-{
+wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEditor) {
     ui->setupUi(this);
 }
 
