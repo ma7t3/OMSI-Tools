@@ -7,8 +7,7 @@ namespace Ui {
 class wHofEditor;
 }
 
-class wHofEditor : public QMainWindow
-{
+class wHofEditor : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -17,6 +16,15 @@ public:
 
 private slots:
     void closeEvent(QCloseEvent *event);
+
+    void actionFileNew();
+    void actionFileOpen();
+    void actionFileSave();
+    void actionFileSaveAs();
+    void actionFileBackToHome();
+    void actionFileClose();
+
+    void saveToFile(const QString &fileName);
 
 signals:
     void backToHome();
