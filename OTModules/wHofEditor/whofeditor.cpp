@@ -40,9 +40,7 @@ void wHofEditor::actionFileOpen() {
         return;
     }
 
-    QTextStream s(&f);
-    s.setEncoding(QStringConverter::Latin1);
-    const QString content = s.readAll();
+    const QByteArray content = f.readAll();
     // TODO: Pass content
     qInfo() << content;
 }
@@ -80,7 +78,4 @@ void wHofEditor::saveToFile(const QString &fileName) {
         QMessageBox::critical(this, tr("Failed writing to file"), tr("Couldn't write to file:\n%1\nError: %2").arg(fileName, f.errorString()));
         return;
     }
-
-    QTextStream s(&f);
-    s.setEncoding(QStringConverter::Latin1);
 }
