@@ -1,5 +1,7 @@
 #include "hoffileroot.h"
 
+#include "hoffileterminus.h"
+
 HofFileRoot::HofFileRoot(QObject *parent) : QObject{parent}, _serviceTripTerminus{nullptr} {
     connect(&_undoStack, &QUndoStack::cleanChanged, this, &HofFileRoot::isSavedChanged);
 }
@@ -56,4 +58,11 @@ bool HofFileRoot::isSaved() const {
 
 void HofFileRoot::setSaved(bool b) {
     _undoStack.setClean();
+}
+
+HofFileTerminus *HofFileRoot::createTerminus(const QByteArray &data) {
+    HofFileTerminus *terminus = new HofFileTerminus(this);
+    terminus->setData(data);
+    // TODO: CONNECT SIGNALS
+    return terminus;
 }

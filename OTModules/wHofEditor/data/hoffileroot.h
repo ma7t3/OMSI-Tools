@@ -39,6 +39,8 @@ public:
     bool isSaved() const;
     void setSaved(bool b);
 
+    HofFileTerminus *createTerminus(const QByteArray &data);
+
 signals:
     void isSavedChanged(bool b);
 
