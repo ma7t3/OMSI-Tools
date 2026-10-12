@@ -41,6 +41,24 @@ public:
 
     HofFileTerminus *createTerminus(const QByteArray &data);
 
+    QString displayName() const;
+    void setDisplayName(const QString &newDisplayName);
+
+    HofFileTerminus *serviceTripTerminus() const;
+    void setServiceTripTerminus(HofFileTerminus *newServiceTripTerminus);
+
+    QStringList globalStrings() const;
+    void setGlobalStrings(const QStringList &newGlobalStrings);
+
+    QList<HofFileTerminus *> termini() const;
+    void setTermini(const QList<HofFileTerminus *> &newTermini);
+
+    QList<HofFileBusstop *> busstops() const;
+    void setBusstops(const QList<HofFileBusstop *> &newBusstops);
+
+    QList<HofFileRoute *> routes() const;
+    void setRoutes(const QList<HofFileRoute *> &newRoutes);
+
 signals:
     void isSavedChanged(bool b);
 

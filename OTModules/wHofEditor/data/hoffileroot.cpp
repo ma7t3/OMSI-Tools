@@ -11,7 +11,11 @@ QString HofFileRoot::fileName() const {
 }
 
 void HofFileRoot::setFileName(const QString &fileName) {
+    if(_fileName == fileName)
+        return;
+
     _fileName = fileName;
+    emit fileNameChanged(_fileName);
 }
 
 void HofFileRoot::setData(const QByteArray &data) {
@@ -25,29 +29,20 @@ QByteArray HofFileRoot::data() const {
 }
 
 void HofFileRoot::clear() {
-    _fileName.clear();
-    emit fileNameChanged(_fileName);
+    setFileName(QString());
+    setDisplayName(QString());
 
-    _displayName.clear();
-    emit displayNameChanged(_displayName);
-
-    _serviceTripTerminus = nullptr;
-    emit serviceTripTerminusChanged(_serviceTripTerminus);
-
-    _globalStrings.clear();
-    emit globalStringsReset(_globalStrings);
+    setServiceTripTerminus(nullptr);
+    setGlobalStrings({});
 
     qDeleteAllLater(_termini);
-    _termini.clear();
-    emit terminiReset(_termini);
+    setTermini({});
 
     qDeleteAllLater(_busstops);
-    _busstops.clear();
-    emit busstopsReset(_busstops);
+    setBusstops({});
 
     qDeleteAllLater(_routes);
-    _routes.clear();
-    emit routesReset(_routes);
+    setRoutes({});
 
     _undoStack.clear();
 }
@@ -65,4 +60,74 @@ HofFileTerminus *HofFileRoot::createTerminus(const QByteArray &data) {
     terminus->setData(data);
     // TODO: CONNECT SIGNALS
     return terminus;
+}
+
+QString HofFileRoot::displayName() const {
+    return _displayName;
+}
+
+void HofFileRoot::setDisplayName(const QString &newDisplayName) {
+    if (_displayName == newDisplayName)
+        return;
+    _displayName = newDisplayName;
+    emit displayNameChanged(newDisplayName);
+}
+
+HofFileTerminus *HofFileRoot::serviceTripTerminus() const {
+    return _termini.contains(_serviceTripTerminus) ? _serviceTripTerminus : nullptr;
+}
+
+void HofFileRoot::setServiceTripTerminus(HofFileTerminus *newServiceTripTerminus) {
+    if (_serviceTripTerminus == newServiceTripTerminus)
+        return;
+    _serviceTripTerminus = newServiceTripTerminus;
+    emit serviceTripTerminusChanged(newServiceTripTerminus);
+}
+
+QStringList HofFileRoot::globalStrings() const {
+    return _globalStrings;
+}
+
+void HofFileRoot::setGlobalStrings(const QStringList &newGlobalStrings) {
+    if(_globalStrings == newGlobalStrings)
+        return;
+
+    _globalStrings = newGlobalStrings;
+    emit globalStringsReset(_globalStrings);
+}
+
+QList<HofFileTerminus *> HofFileRoot::termini() const {
+    return _termini;
+}
+
+void HofFileRoot::setTermini(const QList<HofFileTerminus *> &newTermini) {
+    if(_termini == newTermini)
+        return;
+
+    _termini = newTermini;
+    emit terminiReset(_termini);
+}
+
+QList<HofFileBusstop *> HofFileRoot::busstops() const {
+    return _busstops;
+}
+
+void HofFileRoot::setBusstops(const QList<HofFileBusstop *> &newBusstops) {
+    if(_busstops == newBusstops)
+        return;
+
+    _busstops = newBusstops;
+    emit busstopsReset(_busstops);
+}
+
+QList<HofFileRoute *> HofFileRoot::routes() const {
+    return _routes;
+}
+
+void HofFileRoot::setRoutes(const QList<HofFileRoute *> &newRoutes) {
+    if(_routes == newRoutes)
+        return;
+
+    _routes = newRoutes;
+    emit routesReset(_routes);
 }
