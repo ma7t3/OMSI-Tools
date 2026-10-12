@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "data/hoffileroot.h"
+
 namespace Ui {
 class wHofEditor;
 }
@@ -31,6 +33,8 @@ signals:
 
 private:
     Ui::wHofEditor *ui;
+
+    HofFileRoot *_hofFile;
 };
 
 #endif // WHOFEDITOR_H

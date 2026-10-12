@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEditor) {
+wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEditor), _hofFile{new HofFileRoot{this}} {
     ui->setupUi(this);
 
     connect(ui->actionNew,        &QAction::triggered, this, &wHofEditor::actionFileNew);
@@ -15,6 +15,8 @@ wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEd
     connect(ui->actionSaveAs,     &QAction::triggered, this, &wHofEditor::actionFileSaveAs);
     connect(ui->actionBackToHome, &QAction::triggered, this, &wHofEditor::actionFileBackToHome);
     connect(ui->actionClose,      &QAction::triggered, this, &wHofEditor::actionFileClose);
+
+    connect(_hofFile, &HofFileRoot::displayNameChanged, ui->leHofDisplayName, &QLineEdit::setText);
 }
 
 wHofEditor::~wHofEditor() {
@@ -41,8 +43,8 @@ void wHofEditor::actionFileOpen() {
     }
 
     const QByteArray content = f.readAll();
-    // TODO: Pass content
-    qInfo() << content;
+    _hofFile->setData(content);
+    _hofFile->setFileName(fileName);
 }
 
 void wHofEditor::actionFileSave() {
