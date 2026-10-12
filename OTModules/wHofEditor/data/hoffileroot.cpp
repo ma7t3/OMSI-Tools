@@ -28,7 +28,60 @@ void HofFileRoot::setFileName(const QString &fileName) {
 
 bool HofFileRoot::setData(const QByteArray &data) {
     clear();
-    // TODO
+    const QStringList lines = QString::fromLatin1(data).split("\r\n");
+    for(auto it = lines.begin(); it != lines.end(); ++it) {
+        const QStringList fields = (*it).split("\t");
+
+        if(fields[0] == "[name]") {
+            if(++it == lines.end()) {
+                setError(HofFileParseError::UnexpectedEndOfFile, lines, it);
+                return false;
+            }
+
+            setDisplayName((*it).split("\t")[0]);
+            continue;
+        }
+
+        if(fields[0] == "[global_strings]") {
+            if(++it == lines.end()) {
+                setError(HofFileParseError::UnexpectedEndOfFile, lines, it);
+                return false;
+            }
+
+            bool ok;
+            const qsizetype stringCount = (*it).toInt(&ok);
+            if(!ok) {
+                setError(HofFileParseError::IllegalValue, lines, it);
+                return false;
+            }
+
+            QStringList strings;
+            for(int i = 0; i < stringCount; ++i) {
+                if(++it == lines.end()) {
+                    setError(HofFileParseError::UnexpectedEndOfFile, lines, it);
+                    return false;
+                }
+                strings << (*it).split("\t")[0];
+            }
+            setGlobalStrings(strings);
+            qInfo() << globalStrings();
+        }
+
+        // stringcount_terminus
+        // stringcount_busstop
+
+        if(fields[0] == "[addterminus_list]") {
+            while(++it != lines.end() && (*it).split("\t")[0] != "[end]") {
+                HofFileTerminus *t = createTerminus(*it);
+                qInfo() << t->name();
+            }
+            if(it == lines.end()) {
+                setError(HofFileParseError::UnexpectedEndOfFile, lines, it);
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
