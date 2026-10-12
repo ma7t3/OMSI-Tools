@@ -35,13 +35,13 @@ void HofFileRoot::clear() {
     setServiceTripTerminus(nullptr);
     setGlobalStrings({});
 
-    qDeleteAllLater(_termini);
+    deleteAllLater(_termini);
     setTermini({});
 
-    qDeleteAllLater(_busstops);
+    deleteAllLater(_busstops);
     setBusstops({});
 
-    qDeleteAllLater(_routes);
+    deleteAllLater(_routes);
     setRoutes({});
 
     _undoStack.clear();

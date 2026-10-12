@@ -5,8 +5,7 @@
 #include <QUndoStack>
 
 template <typename ForwardIterator>
-Q_OUTOFLINE_TEMPLATE void qDeleteAllLater(ForwardIterator begin, ForwardIterator end)
-{
+Q_OUTOFLINE_TEMPLATE void deleteAllLater(ForwardIterator begin, ForwardIterator end) {
     while (begin != end) {
         *begin->deleteLater();
         ++begin;
@@ -14,9 +13,9 @@ Q_OUTOFLINE_TEMPLATE void qDeleteAllLater(ForwardIterator begin, ForwardIterator
 }
 
 template <typename Container>
-inline void qDeleteAllLater(const Container &c)
+inline void deleteAllLater(const Container &c)
 {
-    qDeleteAllLater(c.begin(), c.end());
+    deleteAllLater(c.begin(), c.end());
 }
 
 class HofFileTerminus;
