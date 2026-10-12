@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEditor), _hofFile{new HofFileRoot{this}} {
+wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEditor), _hofFile{new HofFileRoot{this}}, _globalStringsModel{new HofGlobalStringsModel{this}} {
     ui->setupUi(this);
 
     connect(ui->actionNew,        &QAction::triggered, this, &wHofEditor::actionFileNew);
@@ -17,6 +17,10 @@ wHofEditor::wHofEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::wHofEd
     connect(ui->actionClose,      &QAction::triggered, this, &wHofEditor::actionFileClose);
 
     connect(_hofFile, &HofFileRoot::displayNameChanged, ui->leHofDisplayName, &QLineEdit::setText);
+
+    _globalStringsModel->setHofFile(_hofFile);
+    ui->tvGlobalStringsTable->setModel(_globalStringsModel);
+    ui->tvGlobalStringsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 }
 
 wHofEditor::~wHofEditor() {
@@ -28,7 +32,7 @@ void wHofEditor::closeEvent(QCloseEvent *event) {
 }
 
 void wHofEditor::actionFileNew() {
-
+    _hofFile->clear();
 }
 
 void wHofEditor::actionFileOpen() {

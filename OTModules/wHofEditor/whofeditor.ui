@@ -289,7 +289,7 @@
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QTreeView" name="tvTermini"/>
@@ -375,7 +375,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1">
             <item>
              <widget class="QGroupBox" name="groupBox_5">

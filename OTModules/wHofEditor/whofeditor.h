@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "data/hoffileroot.h"
+#include "models/hofglobalstringsmodel.h"
 
 namespace Ui {
 class wHofEditor;
@@ -35,6 +36,8 @@ private:
     Ui::wHofEditor *ui;
 
     HofFileRoot *_hofFile;
+
+    HofGlobalStringsModel *_globalStringsModel;
 };
 
 #endif // WHOFEDITOR_H

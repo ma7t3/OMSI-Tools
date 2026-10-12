@@ -295,6 +295,7 @@ qt_add_executable(OMSI-Tools WIN32 MACOSX_BUNDLE
     OTModules/wHofEditor/whofeditor.h OTModules/wHofEditor/whofeditor.cpp OTModules/wHofEditor/whofeditor.ui
     OTModules/wHofEditor/data/hoffileroot.h OTModules/wHofEditor/data/hoffileroot.cpp
     OTModules/wHofEditor/data/hoffileterminus.h OTModules/wHofEditor/data/hoffileterminus.cpp
+    OTModules/wHofEditor/models/hofglobalstringsmodel.h OTModules/wHofEditor/models/hofglobalstringsmodel.cpp
 )
 
 target_include_directories(OMSI-Tools PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
