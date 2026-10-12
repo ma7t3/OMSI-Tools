@@ -153,8 +153,20 @@ void HofFileRoot::setServiceTripTerminus(HofFileTerminus *newServiceTripTerminus
     emit serviceTripTerminusChanged(newServiceTripTerminus);
 }
 
+int HofFileRoot::globalStringsCount() const {
+    return _globalStrings.count();
+}
+
+QString HofFileRoot::globalString(int index) const {
+    return _globalStrings[index];
+}
+
 QStringList HofFileRoot::globalStrings() const {
     return _globalStrings;
+}
+
+void HofFileRoot::setGlobalString(int index, const QString &newGlobalString) {
+    _globalStrings[index] = newGlobalString;
 }
 
 void HofFileRoot::setGlobalStrings(const QStringList &newGlobalStrings) {

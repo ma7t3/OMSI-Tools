@@ -65,7 +65,10 @@ public:
     HofFileTerminus *serviceTripTerminus() const;
     void setServiceTripTerminus(HofFileTerminus *newServiceTripTerminus);
 
+    int globalStringsCount() const;
+    QString globalString(int index) const;
     QStringList globalStrings() const;
+    void setGlobalString(int index, const QString &newGlobalString);
     void setGlobalStrings(const QStringList &newGlobalStrings);
 
     QList<HofFileTerminus *> termini() const;
