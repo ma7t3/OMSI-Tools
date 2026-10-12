@@ -36,7 +36,7 @@ public:
     void clear();
 
     bool isSaved() const;
-    void setSaved(bool b);
+    void setSaved();
 
     HofFileTerminus *createTerminus(const QString &data);
 

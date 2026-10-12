@@ -51,7 +51,7 @@ bool HofFileRoot::isSaved() const {
     return _undoStack.isClean();
 }
 
-void HofFileRoot::setSaved(bool b) {
+void HofFileRoot::setSaved() {
     _undoStack.setClean();
 }
 
