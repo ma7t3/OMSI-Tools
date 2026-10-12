@@ -55,7 +55,7 @@ void HofFileRoot::setSaved(bool b) {
     _undoStack.setClean();
 }
 
-HofFileTerminus *HofFileRoot::createTerminus(const QByteArray &data) {
+HofFileTerminus *HofFileRoot::createTerminus(const QString &data) {
     HofFileTerminus *terminus = new HofFileTerminus(this);
     terminus->setData(data);
     // TODO: CONNECT SIGNALS

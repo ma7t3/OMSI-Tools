@@ -72,17 +72,17 @@ void HofFileTerminus::setString(int index, const QString &newValue) {
     emit stringChanged(index, newValue);
 }
 
-QByteArray HofFileTerminus::data() const {
+QString HofFileTerminus::data() const {
     QString result;
     if(_noPassengers)
         result += "{ALLEX}";
 
     result += "\t" + name() + "\t" + _strings.join("\t");
-    return result.toLatin1();
+    return result;
 }
 
-void HofFileTerminus::setData(const QByteArray &newData) {
-    const QStringList list = QString::fromLatin1(newData).split("\t");
+void HofFileTerminus::setData(const QString &newData) {
+    const QStringList list = newData.split("\t");
     auto it = list.begin();
     if(it != list.end())
         setNoPassengers(*it == "{ALLEX}");

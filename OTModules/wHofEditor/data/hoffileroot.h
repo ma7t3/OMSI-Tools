@@ -38,7 +38,7 @@ public:
     bool isSaved() const;
     void setSaved(bool b);
 
-    HofFileTerminus *createTerminus(const QByteArray &data);
+    HofFileTerminus *createTerminus(const QString &data);
 
     QString displayName() const;
     void setDisplayName(const QString &newDisplayName);

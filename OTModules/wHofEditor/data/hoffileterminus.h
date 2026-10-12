@@ -34,8 +34,8 @@ public:
     void setString(int index, const QString &newValue);
 
 protected:
-    QByteArray data() const;
-    void setData(const QByteArray &newData);
+    QString data() const;
+    void setData(const QString &newData);
 
 signals:
     void nameChanged(const QString &newName);
