@@ -7,7 +7,7 @@
 template <typename ForwardIterator>
 Q_OUTOFLINE_TEMPLATE void deleteAllLater(ForwardIterator begin, ForwardIterator end) {
     while (begin != end) {
-        *begin->deleteLater();
+        (*begin)->deleteLater();
         ++begin;
     }
 }

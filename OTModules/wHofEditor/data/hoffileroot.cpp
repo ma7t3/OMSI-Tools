@@ -38,10 +38,10 @@ void HofFileRoot::clear() {
     deleteAllLater(_termini);
     setTermini({});
 
-    deleteAllLater(_busstops);
+    //deleteAllLater(_busstops);
     setBusstops({});
 
-    deleteAllLater(_routes);
+    //deleteAllLater(_routes);
     setRoutes({});
 
     _undoStack.clear();
