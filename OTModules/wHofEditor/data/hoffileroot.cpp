@@ -2,6 +2,14 @@
 
 #include "hoffileterminus.h"
 
+#include <QDebug>
+
+QString HofFileParseError::errorString() const {
+    return error == NoError             ? ""
+         : error == UnexpectedEndOfFile ? QObject::tr("Unexpected End Of File")
+         : "";
+}
+
 HofFileRoot::HofFileRoot(QObject *parent) : QObject{parent}, _serviceTripTerminus{nullptr} {
     connect(&_undoStack, &QUndoStack::cleanChanged, this, &HofFileRoot::isSavedChanged);
 }
@@ -18,14 +26,19 @@ void HofFileRoot::setFileName(const QString &fileName) {
     emit fileNameChanged(_fileName);
 }
 
-void HofFileRoot::setData(const QByteArray &data) {
+bool HofFileRoot::setData(const QByteArray &data) {
     clear();
     // TODO
+    return true;
 }
 
 QByteArray HofFileRoot::data() const {
     // TODO
     return QByteArray();
+}
+
+HofFileParseError HofFileRoot::error() const{
+    return _error;
 }
 
 void HofFileRoot::clear() {
@@ -45,6 +58,9 @@ void HofFileRoot::clear() {
     setRoutes({});
 
     _undoStack.clear();
+    _error.error = HofFileParseError::NoError;
+    _error.lineNumber = 0;
+    _error.columnNumber = 0;
 }
 
 bool HofFileRoot::isSaved() const {
@@ -130,4 +146,14 @@ void HofFileRoot::setRoutes(const QList<HofFileRoute *> &newRoutes) {
 
     _routes = newRoutes;
     emit routesReset(_routes);
+}
+
+void HofFileRoot::setError(HofFileParseError::ErrorType type, const QStringList &list, const QStringList::const_iterator &lineIterator, int fieldIndex) {
+    _error.error = type;
+    _error.lineNumber = indexOfIterator(list, lineIterator) + 1;
+    _error.columnNumber = 1;
+    const QStringList fields = (*lineIterator).split("\t");
+    for(int i = 0; i < fieldIndex && i < fields.count(); ++i) {
+        _error.columnNumber += (fields[i].size() + 1);
+    }
 }

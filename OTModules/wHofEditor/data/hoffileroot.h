@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QUndoStack>
 
+template <typename T>
+int indexOfIterator(const QList<T> &list, const typename QList<T>::const_iterator &it) {
+    return std::distance(list.begin(), it);
+}
+
 template <typename ForwardIterator>
 Q_OUTOFLINE_TEMPLATE void deleteAllLater(ForwardIterator begin, ForwardIterator end) {
     while (begin != end) {
@@ -13,14 +18,26 @@ Q_OUTOFLINE_TEMPLATE void deleteAllLater(ForwardIterator begin, ForwardIterator 
 }
 
 template <typename Container>
-inline void deleteAllLater(const Container &c)
-{
+inline void deleteAllLater(const Container &c) {
     deleteAllLater(c.begin(), c.end());
 }
 
 class HofFileTerminus;
 class HofFileBusstop;
 class HofFileRoute;
+
+struct HofFileParseError {
+    enum ErrorType {
+        NoError,
+        UnexpectedEndOfFile,
+        IllegalValue
+    };
+
+    ErrorType error;
+    int lineNumber, columnNumber;
+
+    QString errorString() const;
+};
 
 class HofFileRoot : public QObject {
     Q_OBJECT
@@ -30,8 +47,10 @@ public:
     QString fileName() const;
     void setFileName(const QString &fileName);
 
-    void setData(const QByteArray &data);
+    bool setData(const QByteArray &data);
     QByteArray data() const;
+
+    HofFileParseError error() const;
 
     void clear();
 
@@ -58,6 +77,9 @@ public:
     QList<HofFileRoute *> routes() const;
     void setRoutes(const QList<HofFileRoute *> &newRoutes);
 
+protected:
+    void setError(HofFileParseError::ErrorType type, const QStringList &list, const QStringList::const_iterator &lineIterator, int fieldIndex = 0);
+
 signals:
     void isSavedChanged(bool b);
 
@@ -79,6 +101,8 @@ private:
     QList<HofFileTerminus *> _termini;
     QList<HofFileBusstop *> _busstops;
     QList<HofFileRoute *> _routes;
+
+    HofFileParseError _error;
 };
 
 #endif // HOFFILEROOT_H
