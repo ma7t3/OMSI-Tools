@@ -86,10 +86,17 @@ void HofFileTerminus::setData(const QByteArray &newData) {
     auto it = list.begin();
     if(it != list.end())
         setNoPassengers(*it == "{ALLEX}");
+    else return;
+
+    ++it;
+    if(it != list.end())
+        setIbisCode((*it).toInt());
+    else return;
 
     ++it;
     if(it != list.end())
         setName(*it);
+    else return;
 
     QStringList strings;
     for(; it != list.end(); ++it)
